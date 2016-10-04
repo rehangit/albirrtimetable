@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <base target="_top">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: 'Lato';
+        }
+        
+        .table.kaprayertimes-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table>thead>tr>th,
+        .table>tbody>tr>td {
+            padding: inherit;
+            text-align: center;
+        }
+        
+        .table>thead>tr {
+            background-color: rgb(102, 120, 184);
+            color: white;
+            padding-bottom: 6px;
+        }
+        
+        .table>thead>tr>th:first-child,
+        .table>thead>tr>th:nth-child(2),
+        .table>tbody>tr>td:first-child,
+        .table>tbody>tr>td:nth-child(2) {
+            text-align: left;
+        }
+        
+        .table>thead>tr,
+        .table>tbody>tr {
+            padding: 4px;
+            border-bottom: 1px solid lightgrey;
+        }
+        
+        .friday {
+            font-weight: bold;
+            background-color: lightyellow;
+        }
+        
+        .today {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <script>
+        var t = new Date();
+        var m = t.getMonth() + 1;
+        var y = t.getFullYear();
+        var str = ('0' + m).slice(-2) + y;
+        var site = 'http://www.albirr.com/prayer-times?view=prayertimes&filter_month=' + str + '&filter_mid=7';
+        $.get('https://crossorigin.me/' + site, function(data) {
+            var $page = $(data);
+            var $tab = $page.find(".kaprayertimes-table");
+            $tab.find("tfoot").remove();
+            $('#output').html($tab);
+
+            $('tr:contains(Fri)').addClass('friday');
+        });
+    </script>
+</body>
+
+</html>
